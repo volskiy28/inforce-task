@@ -39,6 +39,18 @@ export const itemsSlice = createSlice({
         return 0;
       });
     },
+    removeFromCart: (state, action, productToRemove) => {
+      productToRemove = action.payload;
+      let updatedState = {};
+      updatedState = {
+        ...state,
+        comments: state.items.comments.filter(
+          (item) => item.id !== productToRemove.id
+        ),
+      };
+
+      return updatedState;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchItems.pending, (state) => {
@@ -63,5 +75,5 @@ export const itemsSlice = createSlice({
 });
 
 export default itemsSlice.reducer;
-export const { removeProduct, setOpen, sortBy, sortByName } =
+export const { removeProduct, setOpen, sortBy, sortByName, removeFromCart } =
   itemsSlice.actions;

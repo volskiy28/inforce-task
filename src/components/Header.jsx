@@ -6,12 +6,12 @@ import { useState } from "react";
 
 export const Header = () => {
   const dispatch = useDispatch();
-  const [open, setOpen] = useState(false);
+  const [open, setOpe] = useState(false);
   const [sorted, setSorted] = useState("Sort by name");
   return (
     <div className="w-full bg-black h-[100px] mb-10">
       <div className="max-w-[1240px] mx-auto flex flex-row items-center justify-between">
-        <div onClick={() => setOpen(!open)} className="text-white">
+        <div onClick={() => setOpe(!open)} className="text-white">
           {open ? "" : sorted}
           <li
             className={open ? "text-white outline-none " : "hidden"}

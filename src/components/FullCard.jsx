@@ -6,7 +6,7 @@ export const FullCard = () => {
   const [data, setData] = useState({});
   const [edit, setEdit] = useState(true);
   const [comment, setComment] = useState({
-    id: Math.random(),
+    id: Math.random(1, 100),
     description: "",
     date: Date(),
     productId: id,
@@ -22,21 +22,27 @@ export const FullCard = () => {
       })
       .then((data) => {
         setData(data);
-        setUpdatedProduct(data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
-  const updateProduct = (id) => {
+  const updateProduct = (data) => {
     fetch("http://localhost:8000/products/" + id, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
-    })
-      .then((res) => res.json())
+    }).then((res) => res.json());
+  };
+  const deleteComment = (com) => {
+    let updatedState = {};
+    updatedState = {
+      ...data,
+      comments: data.comments.filter((item) => item.id !== com.id),
+    };
+    updateProduct(updatedState);
   };
   return (
     <div className="mx-auto max-w-[1240px] pt-10">
@@ -77,7 +83,7 @@ export const FullCard = () => {
             <button
               className="bg-green-400 p-2 rounded-full text-white"
               onClick={() => {
-                updateProduct(id);
+                updateProduct(data);
                 setEdit(!edit);
               }}
             >
@@ -130,7 +136,14 @@ export const FullCard = () => {
                 <div key={c.id} className="w-[200px]">
                   <p>
                     {c.description}{" "}
-                    <span className="cursor-pointer">delete</span>
+                    <span
+                      className="cursor-pointer bg-black p-1 text-white rounded-full ml-5"
+                      onClick={() => {
+                        deleteComment(c);
+                      }}
+                    >
+                      delete
+                    </span>
                   </p>
 
                   <p>{c.date}</p>
@@ -147,7 +160,10 @@ export const FullCard = () => {
                 value={comment.description}
               />
               <button
-                onClick={(e) => {}}
+                onClick={() => {
+                  data.comments.push(comment);
+                  updateProduct(data);
+                }}
                 className="bg-black text-white p-2 mt-2 rounded-xl"
               >
                 Add comment
