@@ -75,5 +75,5 @@ export const itemsSlice = createSlice({
 });
 
 export default itemsSlice.reducer;
-export const { removeProduct, setOpen, sortBy, sortByName, removeFromCart } =
+export const {  setOpen, sortBy, sortByName } =
   itemsSlice.actions;
