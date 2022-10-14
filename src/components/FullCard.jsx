@@ -11,7 +11,6 @@ export const FullCard = () => {
     date: Date(),
     productId: id,
   });
-  const [updatedProduct, setUpdatedProduct] = useState();
   useEffect(() => {
     fetch(`http://localhost:8000/products/${id}`)
       .then((response) => {
@@ -37,8 +36,7 @@ export const FullCard = () => {
     }).then((res) => res.json());
   };
   const deleteComment = (com) => {
-    let updatedState = {};
-    updatedState = {
+    let updatedState = {
       ...data,
       comments: data.comments.filter((item) => item.id !== com.id),
     };
